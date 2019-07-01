@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Invoice";
+}
+
+
+<br />
+
+<div class="panel-body">
+
+    <div>
+        <label>Select Orders For Invoice</label>
+        @* @Html.DropDownList("OrderId", null, "---Select---", new { @class = "form-control" })*@
+        @Html.DropDownList("OrderId", null, "---Select Item---", new { @class = "form-control OrderId", id = "OrderId" })
+
+    </div>
+    <input type="button" id="showReport" value="Preview" class="form-control btn-primary" />
+</div>
+<br />
+<div id="tabledata"></div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+
+
+
+
+        $('#showReport').click(function () {
+            $("#ajax_load").show();
+            var wValue = $("#OrderId").val();
+
+
+                $.ajax({
+                    url: "@Url.Action("Port", "Port")",
+                    dataType: "HTML",
+                    type: "POST",
+                    data: {id: wValue },
+                    cache: false,
+                    async: true,
+                    success: function(data) {
+                        $("#tabledata").html(data);
+                    }
+                });
+
+
+
+        })
+
+    </script>
+}
+

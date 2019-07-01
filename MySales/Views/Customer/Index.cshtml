@@ -1,0 +1,74 @@
+﻿@model MySales.Models.tblCustomer
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<br /><br />
+ 
+    <div class="row">
+        <div class="col-md-8">
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading ">
+                    <div class="clearfix ">
+                        Create Customer
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Add", "Customer", FormMethod.Post))
+                    {
+                        <table class="table table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="text-decoration:wavy">Sales System Software</td>
+                            </tr>
+
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.CustomerName)</td>
+                                <td>@Html.EditorFor(model => model.CustomerName)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Address)</td>
+                                <td>@Html.EditorFor(model => model.Address)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.Phone)</td>
+                                <td>@Html.EditorFor(model => model.Phone)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.DirectPayment)</td>
+                                <td>
+                                    Yes
+                                    @Html.RadioButtonFor(model => model.DirectPayment, "Yes")
+                                    No
+                                    @Html.RadioButtonFor(model => model.DirectPayment, "No")
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td></td>
+
+                                <td><input type="submit" name="name" value="submit" class="btn btn-success" /></td>
+                            </tr>
+                        </table>
+
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        @Html.ActionLink("Customer List", "List", "Customer", new { @class = "btn btn-info", @role = "button" })
+    </div>
+
+
+
+
+
+
+
+
+

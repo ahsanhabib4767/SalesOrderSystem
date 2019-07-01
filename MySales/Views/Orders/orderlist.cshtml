@@ -1,0 +1,109 @@
+﻿@model IPagedList<MySales.Models.Order>
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Home Page";
+}
+<p>
+    @Html.ActionLink("Create New Order", "Index", "Orders", new { @class = "btn btn-danger", @role = "button" })
+</p>
+@using (Html.BeginForm("orderlist", "Orders", FormMethod.Get))
+{
+    <input type="text" name="search" placeholder="Enter event" />
+    <input type="submit" name="submit" value="search" />
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().OrderId)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.First().tblCustomer.CustomerName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.First().workOrderNo)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.tblCustomer.CustomerName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.workOrderNo)
+            </td>
+
+            <td>
+
+
+
+
+                @Html.ActionLink("Print", "Port", new { id = item.OrderId }, new { @class = "btn btn-success pull-right btn-sm glyphicon glyphicon-print" })
+
+                
+
+            </td>
+        </tr>
+    }
+
+</table>
+<div id="tabledata"></div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+
+
+
+
+        $('#showReport').click(function () {
+            $("#ajax_load").show();
+            var wValue = $("#OrderId").val();
+
+
+                $.ajax({
+                    url: "@Url.Action("Port", "Port")",
+                    dataType: "HTML",
+                    type: "POST",
+                    data: {id: wValue },
+                    cache: false,
+                    async: true,
+                    success: function(data) {
+                        $("#tabledata").html(data);
+                    }
+                });
+
+
+
+        })
+
+    </script>
+}
+@Html.PagedListPager(Model, i => Url.Action("orderlist", "Orders", new { i, search = Request.QueryString["search"] }))
+<br />
+

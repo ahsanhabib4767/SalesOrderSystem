@@ -1,0 +1,38 @@
+﻿@model MySales.Models.Party
+@{
+    ViewBag.Title = "Home Page";
+}
+<div>
+    <h4>Party</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pphone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pphone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.pid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

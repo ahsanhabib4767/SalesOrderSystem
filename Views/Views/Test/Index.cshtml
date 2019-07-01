@@ -1,0 +1,67 @@
+﻿@model MyCascade.Models.Order
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Add", "Test", FormMethod.Post))
+{
+<div class="container">
+    <h3>Sales System Software</h3>
+
+    <table class="table table-striped">
+
+        <tr>
+
+            <td>@Html.DisplayNameFor(model => model.ActivityId)</td>
+            <td>
+                @if (ViewBag.Alist != null)
+                {
+                    @Html.DropDownListFor(model => model.ActivityId, ViewBag.Alist as SelectList, "--Activity--", htmlAttributes: new { @class = "from-control"})
+                }
+           </td>
+
+
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.StateID)</td>
+            <td>@Html.DropDownListFor(model => model.StateID, new SelectList(""), "---Select sub--", htmlAttributes: new { @class = "from-control"})</td>
+
+
+        </tr>
+        <tr>
+
+            <td></td>
+
+            <td><input type="submit" name="name" value="submit" class="btn btn-success" /></td>
+        </tr>
+    </table>
+</div>
+    }
+    
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        $(document).ready(function () {
+            $('#ActivityId').change(function () {
+                var activityId = $(this).val();
+                debugger
+                $.ajax({
+                    type: "post",
+                    url: "/Test/GetSubActivityList?ActivityId=" + activityId,
+                    contentType: "html",
+                    success: function (response) {
+                        debugger
+                        $("#StateID").empty();
+                        $("#StateID").append(response);
+                    }
+                })
+            })
+        })
+
+
+    </script>
+}

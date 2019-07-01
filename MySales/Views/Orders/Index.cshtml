@@ -1,0 +1,564 @@
+﻿@model MySales.Models.Order
+@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <br /><br />
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading ">
+                    <div class="clearfix ">
+                        Create Invoice
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-hover">
+
+                    <tr>
+                        <td><input type="hidden" id="UserId" /></td>
+                    </tr>
+
+                    <tr class="table-primary">
+
+                        <td>@Html.DisplayNameFor(model => model.CriteriaID)</td>
+                        <td> @Html.DropDownList("CriteriaID", null, "---Select Criteria---", new { @class = "form-control CriteriaID", id = "CriteriaID" })</td>
+
+
+                    </tr>
+
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.CustomerId)</td>
+                        <td>
+                           
+                            @Html.DropDownList("CustomerId", null, "---Select Customer---", new { @class = "form-control CustomerId", id = "CustomerId" })
+                        </td>
+
+
+                    </tr>
+
+                    <tr class="table-primary">
+                        <td>@Html.DisplayNameFor(model => model.BrandID)</td>
+                        <td> @Html.DropDownList("BrandID", null, "---Select Brand---", new { @class = "form-control BrandID", id = "BrandID" })</td>
+                       
+                    </tr>
+                    <tr>
+
+                        <td>@Html.DisplayNameFor(model => model.ActivityId)</td>
+                        <td>
+                            @if (ViewBag.Alist != null)
+                            {
+                                @Html.DropDownListFor(model => model.ActivityId, ViewBag.Alist as SelectList, "--Activity--", htmlAttributes: new { @class = "from-control ActivityId" })
+                                
+                            }
+                        </td>
+
+
+                    </tr>
+
+                    <tr class="table-primary">
+                        <td>@Html.DisplayNameFor(model => model.StateID)</td>
+                        <td>@Html.DropDownListFor(model => model.StateID, new SelectList(""), "--Select Sub Activity--", htmlAttributes: new { @class = "from-control" })</td>
+
+
+                    </tr>
+
+                    <tr>
+                        <td>Event</td>
+                        <td>
+                            <input type="text" id="productName" class="form-control" />
+                            <span class="error">Order no required</span>
+                        </td>
+                    </tr>
+
+
+                    <tr class="table-primary">
+
+
+                        <td>@Html.DisplayNameFor(model => model.workOrderNo)</td>
+                        <td>@Html.EditorFor(model => model.workOrderNo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+
+                    </tr>
+                    <tr>
+                        <td>Order Date</td>
+                        <td>
+                            <input type="date" id="OrderDate" class="form-control" />
+                            <span class="error">Order no required</span>
+                        </td>
+                    </tr>
+                    <tr class="table-primary">
+                        <td>Delivery Date</td>
+                        <td>
+                            <input type="date" id="DeliveryDate" class="form-control" />
+                            <span class="error">Order no required</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Place</td>
+                        <td>
+                            <input type="text" id="Place" class="form-control" />
+                            <span class="error">Order no required</span>
+                        </td>
+                    </tr>
+                    <tr class="table-primary">
+                        <td>Header</td>
+                        <td>
+                            <input type="text" id="Heading" class="form-control" />
+                            <span class="error">Order no required</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading ">
+                    <div class="clearfix ">
+                        Add Description
+                    </div>
+                </div>
+                <table class="table-primary">
+                    <tr>
+                        <td>Description</td>
+                        <td>Unit</td>
+                        <td>Rate</td>
+                        <td>Qty</td>
+                        <td>Total Amount</td>
+                        <td>VAT</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                       
+                        <td>
+                           
+                            @Html.DropDownList("des", null, "---Select Item---", new { @class = "form-control description", id = "description" })
+
+                            <span class="error">Item name required</span>
+                        </td>
+                        <td>
+                            <select id="unit" class="form-control">
+                                <option value="---" selected>---</option>
+                                <option value="cs" selected>CS</option>
+                                <option value="pcs" selected>PCS</option>
+                                <option value="sft" selected>sft</option>
+                            </select>
+
+                            <span class="error">Valid unit required</span>
+                        </td>
+                        <td>
+                            <input type="text" id="Rate" class="form-control" />
+                            <span class="error">Valid rate required</span>
+                        </td>
+                        <td>
+                            <input type="text" id="Qty" class="form-control" />
+                            <span class="error">Valid quantity required</span>
+                        </td>
+                        <td>
+                            <input type="text" id="Amt" class="form-control" />
+                            <span class="error">Valid Amount required</span>
+                        </td>
+                        <td>
+                            <input type="text" id="vat" value="0" class="form-control" />
+                            <span class="error">Valid Vat required</span>
+                        </td>
+                        <td>
+                            <input type="button" id="add" value="add" class="btn btn-info" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="orderItems" class="tablecontainer">
+
+                </div>
+                <div style="padding:10px 0px; text-align:left">
+                    <button type="submit" id="submit" value="Save" class="btn btn-danger">Save</button>
+                    <br />
+                    <br />
+                    <button type="reset" value="Reset" class="btn btn-default">Reset</button>
+                </div>
+              
+              
+          
+  </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading ">
+                    <div class="clearfix ">
+                        Other Info
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-hover">
+
+
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.Wotype)</td>
+                        <td>@Html.EditorFor(model => model.Wotype, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</td>
+                    </tr>
+                    <tr class="table-primary">
+
+                        <td>@Html.DisplayNameFor(model => model.billsubmission)</td>
+                        <td><input type="text" id="billsubmission" class="form-control" value="N/A" /></td>
+
+
+                    </tr>
+                    <tr class="table-primary">
+
+                        <td>@Html.DisplayNameFor(model => model.advance)</td>
+                        <td><input type="text" id="advance" class="form-control" value="No" /></td>
+
+
+                    </tr>
+                    <tr class="table-primary">
+
+                        <td>@Html.DisplayNameFor(model => model.warrenty)</td>
+                        <td>
+                            NO
+                            @Html.RadioButtonFor(model => model.warrenty, "No")
+                            YES
+                            @Html.RadioButtonFor(model => model.warrenty, "Yes")
+                        </td>
+                    </tr>
+                    <tr class="table-primary">
+
+                        <td>@Html.DisplayNameFor(model => model.cancel)</td>
+                        <td>
+                            NO
+                            @Html.RadioButtonFor(model => model.cancel, "No")
+                            YES
+                            @Html.RadioButtonFor(model => model.cancel, "Yes")
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+            <!---end first div column-->
+
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+        ///Ajax for modal///
+
+        function Add(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/Customer/Add",
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!")
+                }
+            });
+            }
+        $("#saveO").click(function (e) {
+            e.preventDefault();
+            var data = JSON.stringify({
+                name: $("#CustomerName").val(),
+                address: $("#Address").val(),
+                phone: $("#Phone").val(),
+
+            });
+
+            $.when(Add(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+        ///Ajax for modal end///
+
+        $("#CriteriaID").change(function () {
+       // Console.log(data);
+
+            $.ajax({
+                url: "@Url.Action("GetStockQty", "Orders")",
+                data: { activityid: $('#CriteriaID').val() },
+            type: "GET",
+            dataType: "json",
+                success: function (data) {
+
+                    $("#Wotype").val(data.Wotype);
+
+            },
+            error: function () {
+                alert("Failed! can't load data!");
+            }
+        });
+
+    });
+
+        ///Ajax for cascade dropdown///
+        $(document).ready(function () {
+            $('#ActivityId').change(function () {
+                var activityId = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    url: "/Orders/GetSubActivityList?ActivityId=" + activityId,
+                    contentType: "html",
+                    success: function (response) {
+
+                        $("#StateID").empty();
+                        $("#StateID").append(response);
+                    }
+                })
+            })
+        })
+
+        ///Ajax for cascade dropdown end ///
+    </script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            var orderItems = [];
+            //Add button click function//
+            $('#add').click(function () {
+                //Check validation of order item//
+                var isValidItem = true;
+
+                if ($('#description').val().trim() == '') {
+                    isValidItem = false;
+                    $('#description').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#description').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#unit').val().trim() == '') {
+                    isValidItem = false;
+                    $('#unit').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#unit').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#Rate').val().trim() == '') {
+                    isValidItem = false;
+                    $('#Rate').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#Rate').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#Qty').val().trim() == '') {
+                    isValidItem = false;
+                    $('#Qty').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#Qty').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#Amt').val().trim() == '') {
+                    isValidItem = false;
+                    $('#Amt').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#Amt').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#vat').val().trim() == '') {
+                    isValidItem = false;
+                    $('#vat').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#vat').siblings('span.error').css('visibility', 'hidden');
+                }
+                //Add item to list if valid
+                if (isValidItem) {
+                    orderItems.push({
+                        Description: $('#description').val().trim(),
+                        Unit: $('#unit').val().trim(),
+                        Rate: $('#Rate').val().trim(),
+                        Qty: $('#Qty').val().trim(),
+                        Amt: $('#Amt').val().trim(),
+                        vat: $('#vat').val().trim(),
+
+                    });
+
+                    $('#description').val('').focus();
+                    $('#unit').val('').focus();
+                    $('#Rate').val('').focus();
+                    $('#Qty').val('').focus();
+                    $('#Amt').val('').focus();
+                    $('#vat').val('').focus();
+                }
+                //populate order items//
+                GeneratedItemsTable();
+
+            });
+
+
+            $('#submit').click(function () {
+                //validation of order list//
+
+                var isAllValid = true;
+                if (orderItems.length == 0) {
+                    $('#orderItems').html('<span style="color:red;">PLEASE ADD ORDER ITEMS</span>');
+                    isAllValid = false;
+                }
+
+
+
+                //Save if valid
+                if (isAllValid) {
+                    var data = {
+                        CriteriaID: $('#CriteriaID').val().trim(),
+                        CustomerId: $('#CustomerId').val().trim(),
+
+                        BrandID: $('#BrandID').val().trim(),
+                        ActivityId: $('#ActivityId').val().trim(),
+                        StateID: $('#StateID').val().trim(),
+                        productName: $('#productName').val().trim(),
+
+
+                        workOrderNo: $('#workOrderNo').val().trim(),
+                        OrderDate: $('#OrderDate').val().trim(),
+                        DeliveryDate: $('#DeliveryDate').val().trim(),
+                        Place: $('#Place').val().trim(),
+                        Heading: $('#Heading').val().trim(),
+                        Wotype: $('#Wotype').val().trim(),
+                        billsubmission: $('#billsubmission').val().trim(),
+                        advance: $('#advance').val().trim(),
+                        warrenty: $('#warrenty').val().trim(),
+                        cancel: $('#cancel').val().trim(),
+                        OrderDetails: orderItems
+                    }
+
+                    $.ajax({
+                        url: '/Test/SaveOrder',
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        dataType: "JSON",
+                        contentType: "application/json",
+                        success: function (d) {
+
+                            if (d.status == true) {
+
+                                orderItems = [];
+                                $('#CriteriaID').val('');
+                                $('#CustomerId').val('');
+                                $('#BrandID').val('');
+                                $('#ActivityId').val('');
+                                $('#StateID').val('');
+                                $('#productName').val('');
+                                $('#workOrderNo').val('');
+                                $('#OrderDate').val('');
+                                $('#DeliveryDate').val('');
+                                $('#Place').val('');
+                                $('#Heading').val('');
+                                $('#Wotype').val('');
+                                $('#billsubmission').val('');
+                                $('#advance').val('');
+                                $('#cancel').val('');
+                                $('#UserId').val('');
+                                $('#orderItems').empty();
+                                alert('Successfully done...');
+                                location.reload();
+                            }
+                            else {
+                                alert('Failed');
+                            }
+                            $('#submit').val('Save');
+                            
+                        },
+                        error: function () {
+                            alert('Error. Please try again.');
+                            $('#submit').val('Save');
+                        }
+
+                    });
+                }
+
+            });/////////end submit
+            function GeneratedItemsTable() {
+                if (orderItems.length > 0) {
+                    var $table = $('<table />');
+                    $table.append('<thead><tr><th>Description</th><th>Unit</th><th>Rate</th><th>Qty</th><th>Amt</th><th>Vat</th><th></th></tr></thead>');
+                    var $tbody = $('<tbody />');
+                    $.each(orderItems, function (i, val) {
+                        var $row = $('<tr />');
+                        $row.append($('<td />').html(val.Description));
+                        $row.append($('<td />').html(val.Unit));
+                        $row.append($('<td />').html(val.Rate));
+                        $row.append($('<td />').html(val.Qty));
+                        $row.append($('<td />').html(val.Amt));
+                        $row.append($('<td />').html(val.vat));
+                        var $remove = $('<a href="#">Remove</a>');
+                        $remove.click(function (e) {
+                            e.preventDefault();
+                            orderItems.splice(i, 1);
+                            GeneratedItemsTable();
+                        });
+                        $row.append($('<td />').html($remove));
+                        $tbody.append($row);
+                    });
+                    console.log("current", orderItems);
+                    $table.append($tbody);
+                    $('#orderItems').html($table);
+                }
+                else {
+                    $('#orderItems').html('');
+                }
+            }
+        });//////////////////end main
+        $(document).ready(function () {
+            function compute() {
+                var num1 = $('#Rate').val();
+                var num2 = $('#Qty').val();
+
+                var result = num1 * num2;
+                $('#Amt').val(result);
+            }
+            $('#Rate,#Qty').change(compute);
+
+        })
+    </script>
+}
+
+<style>
+    /*Adding some css for looks good*/
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+
+    /*css for table*/
+    .container td {
+        vertical-align: top;
+    }
+
+    .tablecontainer table {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 1px solid #BFAEAE;
+        border-right: 1px solid #BFAEAE;
+    }
+
+    .tablecontainer th {
+        border-bottom: 2px solid #BFAEAE !important;
+    }
+
+    .tablecontainer th, .tablecontainer td {
+        text-align: left;
+        border-left: 1px solid #BFAEAE;
+        padding: 5px;
+        border-bottom: 1px solid #BFAEAE;
+    }
+
+    .ui-widget {
+        font-size: 12px !important;
+    }
+</style>
+

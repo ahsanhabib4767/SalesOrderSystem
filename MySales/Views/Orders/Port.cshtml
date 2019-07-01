@@ -1,0 +1,14 @@
+﻿@using ReportViewerForMvc
+
+@Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer, new { scrolling = "yes", width = "65%", height = "100%" })
+
+<script>
+    $(document).ready(function () {
+        $("#ajax_load").hide();
+    })
+</script>
+<style>
+    iframe {
+        border: 0px;
+    }
+</style>

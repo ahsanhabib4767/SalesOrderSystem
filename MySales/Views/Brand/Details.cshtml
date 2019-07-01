@@ -1,0 +1,24 @@
+﻿@model MySales.Models.tblBrand
+@{
+    ViewBag.Title = "Home Page";
+}
+<div>
+    <h4>Party</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BrandDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrandDescription)
+        </dd>
+
+        
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BrandID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

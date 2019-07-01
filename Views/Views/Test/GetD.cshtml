@@ -1,0 +1,10 @@
+﻿@model MyCascade.Models.SubActivity
+
+<option value=""></option>
+@if (ViewBag.list != null)
+{
+    foreach(var item in ViewBag.list)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+}

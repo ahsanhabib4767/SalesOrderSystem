@@ -1,0 +1,148 @@
+﻿@model MySales.Models.Order
+@{
+    ViewBag.Title = "Home Page";
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<br /><br />
+<input type="radio" name="Mediator" id="Rep1" value="1" style="width:5%" checked="checked" />CSD
+<input type="radio" name="Mediator" id="Agent1" value="2" style="width:5%" />Tropicana
+<br />
+
+
+<table class="table" id="detail">
+
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.workOrderNo)</td>
+        <td>@Html.DropDownList("Orderlists", null, "Select Item", new { @class = "form-control Orderlists", id= "Orderlists" })</td>
+
+
+    </tr>
+
+</table>
+
+<div>
+
+    @using (Html.BeginForm("Add", "Orders", FormMethod.Post))
+    {<label>orderID</label>
+        @Html.HiddenFor(model => model.OrderId)
+        <label>CustomerId</label>
+        <input type="text" name="CustomerId" id="CustomerId" class="form-control" readonly />
+        <label>Brand</label>
+        <input type="text" name="BrandID" id="BrandID" class="form-control" readonly />
+        <label>OrderNo</label>
+        <input type="text" name="workOrderNo" id="workOrderNo" class="form-control" readonly />
+        <label>Criteria</label>
+        <input type="text" name="CriteriaID" id="CriteriaID" class="form-control" readonly />
+        <label>Product Event</label>
+        <input type="text" name="ProductName" id="ProductName" class="form-control" />
+        <label>OrderDate</label>
+        <input type="text" name="OrderDate" id="OrderDate" class="form-control" />
+        <label>DeliveryDate</label>
+        <input type="text" name="DeliveryDate" id="DeliveryDate" class="form-control" />
+        <label>Place</label>
+        <input type="text" name="Place" id="Place" class="form-control" />
+        <label>Heading</label>
+        <input type="text" name="Heading" id="Heading" class="form-control" />
+       
+        <input type="submit" value="Update" class="btn-primary" />
+    }
+</div>
+
+
+
+
+
+
+<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+        
+    /////////////////////////Load by dropdown list js////////////////////
+    $("#Orderlists").change(function () {
+       // Console.log(data);
+
+            $.ajax({
+                url: "@Url.Action("GetStockQty", "Orders")",
+                data: { pId: $('#Orderlists').val() },
+            type: "GET",
+            dataType: "json",
+                success: function (data) {
+                    $("#OrderId").val(data.ord);
+                    $("#CustomerId").val(data.cid);
+                    $("#BrandID").val(data.bid);
+                    $("#workOrderNo").val(data.work);
+                    $("#CriteriaID").val(data.crid);
+                    $("#ProductName").val(data.productname);
+                    $("#OrderDate").val(data.orderdate);
+                    $("#DeliveryDate").val(data.deldate);
+                  
+                    $("#Place").val(data.place);
+                    $("#Heading").val(data.heading);
+                   
+                    
+                   
+                    
+
+            },
+            error: function () {
+                alert("Failed! can't load data!");
+            }
+        });
+
+    });
+
+
+
+    ///////////////////////////price change js//////////////////////////
+
+    $(document).ready(function () {
+        function compute() {
+            var num1 = $('#Price').val();
+            var num2 = $('#Quantity').val();
+
+            var result = num1 * num2;
+            $('#Amount').val(result);
+        }
+        $('#Price,#Quantity').change(compute);
+
+    })
+
+    /////////////////////radio-button js///////////////////////////////////////////////
+
+
+<script>
+/////////////////////Update values of data js//////////////////////////////////////////
+    $("#updateButton").click(function () {
+        var data = {
+            pID: $("#Orderlists").val(),
+
+        }
+        $.ajax({
+            url: '/Orders/Add',
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "JSON",
+            contentType: "application/json",
+            success: function (a) {
+
+                if (a.status == true) {
+
+                    alert('Successfully Updated...');
+                    window.location.reload();
+                    $("#posmID").val('');
+                    $("#posmName").val('');
+                }
+                else {
+                    alert('Failed');
+                }
+            },
+            error: function () {
+                alert('Error. Please try again.');
+            }
+        });
+
+    });
+
+</script>

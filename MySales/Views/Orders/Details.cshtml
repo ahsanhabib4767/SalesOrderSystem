@@ -1,0 +1,52 @@
+﻿
+@model MySales.Models.Order
+@{
+    ViewBag.Title = "null";
+}
+
+<div>
+    <h2>Invoice of : @Model.OrderId</h2>
+
+
+</div>
+<div class="panel-body">
+    <table class="table table-striped table-responsive">
+        <tbody>
+            <tr>
+                <td>Customer Name : @Model.CustomerId</td>
+                <td>Order Date : @Model.OrderDate</td>
+                <td>Work Order No: @Model.workOrderNo</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Event Name</th>
+                                <th>Work Order</th>
+                               
+                            </tr>
+
+
+                            <tr>
+                                <td>@Model.ProductName</td>
+                                <td>@Model.workOrderNo</td>
+                                
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                  
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

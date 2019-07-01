@@ -1,0 +1,61 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+<br />
+
+
+
+<h2>Choose Report Parameter</h2>
+<div class="panel-body">
+    <div class="col-md-6">
+        <div>
+            <label>Enter Begining Date:</label>
+            @Html.TextBox("BeginingDate", DateTime.Now.ToString("dd-MMM-yyyy"), new { @class = "form-control" })
+            <label>Enter Ending Date:</label>
+            @Html.TextBox("EndingDate", DateTime.Now.ToString("dd-MMM-yyyy"), new { @class = "form-control" })
+            <br />
+            <input type="button" id="showReport" value="Preview" class="form-control btn-primary" />
+        </div>
+    </div>
+    <div>
+        <label>Select Catagory:</label>
+        @Html.DropDownList("CriteriaID", null, "---Select Item---" ,new { @class = "from-control CriteriaID", id = "CriteriaID" })
+  
+
+    </div>
+</div>
+<br />
+<div id="tabledata"></div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+        $('#showReport').click(function () {
+            $("#ajax_load").show();
+            var wValue = $("#CriteriaID").val();
+
+
+
+                $.ajax({
+                    url: "@Url.Action("OrderCount", "Report")",
+                    dataType: "HTML",
+                    type: "POST",
+                    data: { bDate: $("#BeginingDate").val(), eDate: $("#EndingDate").val(),Id: wValue },
+                    cache: false,
+                    async: true,
+                    success: function(data) {
+                        $("#tabledata").html(data);
+                    }
+                });
+
+
+
+
+        })
+
+    </script>
+    }

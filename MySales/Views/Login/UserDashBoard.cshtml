@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "UserDashBoard";
+}
+
+<fieldset>
+    User DashBoard
+
+    @if (Session["UserName"] != null)
+    {
+        <text >
+        Welcome @Session["UserName"].ToString()
+        </text>
+    }
+</fieldset>
+@Html.ActionLink("Logout", "LogOut", new { controller = "Login" }, new { @class = "pull-right" })

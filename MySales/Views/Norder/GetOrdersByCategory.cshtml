@@ -1,0 +1,7 @@
+﻿<div class="form-group">
+    @Html.Label("Orders", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.DropDownList("Orders", (IEnumerable<SelectListItem>)ViewBag.Orders,"---Select---", new { @class = "form-control", id = "order", style = "min-width: 250px  max-width: 250px;", onchange = "GetOrderDetailsById()" })
+    </div>
+</div>
+

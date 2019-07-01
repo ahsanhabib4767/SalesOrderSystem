@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<br /><br />
+<div class="row">
+    <div class="col-md-6">
+        <!--GEO Layer start-->
+        <div class="panel panel-primary">
+            <div class="panel-heading ">
+                <div class="clearfix ">
+                    Select Catagory Type
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="radio ">
+                            <label><input type="radio" checked="checked" value="1" name="Criteria">CSD</label>
+                        </div>
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <div class="radio">
+                            <label><input type="radio" value="2" name="Criteria">Tropicana</label>
+                        </div>
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <div class="radio">
+                            <label><input type="radio" value="3" name="Criteria">AF</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("UpdateOrder", "Norder", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div id="Orders">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="OrderDetails">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getOrders();
+            GetOrdersDetailsById();
+        });
+
+
+        $('input[type=radio][name=Criteria]').change(function () {
+
+            var categoryId = parseInt(this.value);
+
+            $.ajax({
+                type: "POST",
+                url: "/Norder/GetOrdersByCategory",
+                data: {
+                    categoryId: categoryId
+                },
+                dataType: "HTML",
+                cache: "false",
+                success: function (data) {
+                    $("#Orders").html(data);
+                }
+            });
+        });
+
+        function getOrders() {
+            var categoryId = parseInt($('input[name=Criteria]:checked').val());
+            $.ajax({
+                type: "POST",
+                url: "/Norder/GetOrdersByCategory",
+                data: {
+                    categoryId: categoryId
+                },
+                dataType: "HTML",
+                cache: "false",
+                success: function (data) {
+                    $("#Orders").html(data);
+                }
+            });
+        }
+
+        function GetOrderDetailsById() {
+            var orderId = parseInt($("#order").val());
+            $.ajax({
+                type: "POST",
+                url: "/Norder/GetOrderById",
+                data: {
+                    orderId: orderId
+                },
+                dataType: "HTML",
+                cache: "false",
+                success: function (data) {
+                    $("#OrderDetails").html(data);
+                }
+            });
+        }
+    </script>
+}
+
+
+

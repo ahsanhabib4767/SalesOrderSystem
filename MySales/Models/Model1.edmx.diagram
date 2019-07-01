@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="644d5f83c90846b3ae8c5afb686a8c5d" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="OnlineShopModel.Activity" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.Criteria" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.descriptionTable" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.Order" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.OrderDetail" Width="1.5" PointX="7.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.Party" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.SubActivity" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.tblBrand" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.tblCustomer" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.UserProfile" Width="1.5" PointX="7.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopModel.UserRole" Width="1.5" PointX="10" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="OnlineShopModel.FK__Order__ActivityI__0697FACD" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.FK__Order__ActivityI__7908F585" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.FK__SubActivi__Activ__3FD07829" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.fk_Order_Criteria" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.FK__Order__StateID__79FD19BE" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.fk_Order_tblBrand" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.fk_Order_tblCustomers" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.fk_OrderDetail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.FK__Party__UserId__73852659" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopModel.FK__UserRole__Userid__25DB9BFC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

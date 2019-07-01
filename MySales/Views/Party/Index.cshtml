@@ -1,0 +1,63 @@
+﻿@model MySales.Models.Party
+@{
+    ViewBag.Title = "Home Page";
+}
+<br /><br />
+
+    <div class="row">
+        <div class="col-md-8">
+            <!--GEO Layer start-->
+            <div class="panel panel-primary">
+                <div class="panel-heading ">
+                    <div class="clearfix ">
+                        Creating Party
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Add", "Party", FormMethod.Post))
+                    {
+                        <table class="table table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="text-decoration:wavy">Sales System Software</td>
+                            </tr>
+
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.pname)</td>
+                                <td>@Html.EditorFor(model => model.pname)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.paddress)</td>
+                                <td>@Html.EditorFor(model => model.paddress)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.DisplayNameFor(model => model.pphone)</td>
+                                <td>@Html.EditorFor(model => model.pphone)</td>
+                            </tr>
+
+                            <tr>
+
+                                <td></td>
+
+                                <td><input type="submit" name="name" value="submit" class="btn btn-success" /></td>
+                            </tr>
+                        </table>
+                    }
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        @Html.ActionLink("Party List", "List", "Party", new { @class = "btn btn-info", @role = "button" })
+    </div>
+
+
+
+
+
+
+
+

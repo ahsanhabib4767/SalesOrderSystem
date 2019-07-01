@@ -1,0 +1,63 @@
+﻿@using (Html.BeginForm("SubmitForm", "Home", FormMethod.Post))
+{
+
+    <table>
+        <tr>
+            <td>
+                <label for="title">
+                    Title
+                </label>
+            </td>
+            <td>
+                <select id="title" name="title">
+                    <option>Mr</option>
+                    <option>Dr</option>
+                    <option>Ms</option>
+                    <option>Mrs</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="givenName">
+                    Given Name
+                </label>
+            </td>
+            <td>
+                <input id="name" name="givenName" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="surname">
+                    Surname
+                </label>
+            </td>
+            <td>
+                <input id="surname" name="surname" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <input type="submit" value="Submit" />
+            </td>
+        </tr>
+    </table>
+}
+<div id="result"></div>
+<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+        $(function() {
+            $("form").submit(function(e) {
+                $.post($(this).attr("action"),
+                        $(this).serialize(),
+                        function(data) {
+                    $("#result").html(data);
+                });
+                e.preventDefault();
+            });
+        });
+</script>

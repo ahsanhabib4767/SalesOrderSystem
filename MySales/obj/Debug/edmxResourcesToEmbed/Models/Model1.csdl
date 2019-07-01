@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" />
+    <Property Name="ActivityName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="criteria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Order__ActivityI__0697FACD" FromRole="Activity" ToRole="Order" />
+    <NavigationProperty Name="Orders1" Relationship="Self.FK__Order__ActivityI__7908F585" FromRole="Activity" ToRole="Order" />
+    <NavigationProperty Name="SubActivities" Relationship="Self.FK__SubActivi__Activ__3FD07829" FromRole="Activity" ToRole="SubActivity" />
+  </EntityType>
+  <EntityType Name="Criteria">
+    <Key>
+      <PropertyRef Name="CriteriaID" />
+    </Key>
+    <Property Name="CriteriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CriteriaDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.fk_Order_Criteria" FromRole="Criteria" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="descriptionTable">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="BrandID" Type="Int32" Nullable="false" />
+    <Property Name="workOrderNo" Type="Int32" Nullable="false" />
+    <Property Name="CriteriaID" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="0" />
+    <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
+    <Property Name="Place" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Heading" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ActivityId" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="Wotype" Type="Int32" />
+    <Property Name="advance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="billsubmission" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="warrenty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cancel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK__Order__ActivityI__0697FACD" FromRole="Order" ToRole="Activity" />
+    <NavigationProperty Name="Activity1" Relationship="Self.FK__Order__ActivityI__7908F585" FromRole="Order" ToRole="Activity" />
+    <NavigationProperty Name="Criterion" Relationship="Self.fk_Order_Criteria" FromRole="Order" ToRole="Criteria" />
+    <NavigationProperty Name="SubActivity" Relationship="Self.FK__Order__StateID__79FD19BE" FromRole="Order" ToRole="SubActivity" />
+    <NavigationProperty Name="tblBrand" Relationship="Self.fk_Order_tblBrand" FromRole="Order" ToRole="tblBrand" />
+    <NavigationProperty Name="tblCustomer" Relationship="Self.fk_Order_tblCustomers" FromRole="Order" ToRole="tblCustomers" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.fk_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderItemsId" />
+    </Key>
+    <Property Name="OrderItemsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Unit" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Qty" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Amt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="vat" Type="Int32" />
+    <Property Name="SubTotal" Type="Decimal" Precision="33" Scale="6" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Totals" Type="Decimal" Precision="34" Scale="6" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Order" Relationship="Self.fk_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Party">
+    <Key>
+      <PropertyRef Name="pid" />
+    </Key>
+    <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="paddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pphone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK__Party__UserId__73852659" FromRole="Party" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="SubActivity">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="Int32" Nullable="false" />
+    <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ActivityId" Type="Int32" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK__SubActivi__Activ__3FD07829" FromRole="SubActivity" ToRole="Activity" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Order__StateID__79FD19BE" FromRole="SubActivity" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="tblBrand">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Name="BrandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.fk_Order_tblBrand" FromRole="tblBrand" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="tblCustomer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DirectPayment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.fk_Order_tblCustomers" FromRole="tblCustomers" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Parties" Relationship="Self.FK__Party__UserId__73852659" FromRole="UserProfile" ToRole="Party" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__Userid__25DB9BFC" FromRole="UserProfile" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Userid" Type="Int32" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK__UserRole__Userid__25DB9BFC" FromRole="UserRole" ToRole="UserProfile" />
+  </EntityType>
+  <Association Name="FK__Order__ActivityI__0697FACD">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__ActivityI__7908F585">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubActivi__Activ__3FD07829">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="0..1" />
+    <End Role="SubActivity" Type="Self.SubActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="SubActivity">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order_Criteria">
+    <End Role="Criteria" Type="OnlineShopModel.Criteria" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Criteria">
+        <PropertyRef Name="CriteriaID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CriteriaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__StateID__79FD19BE">
+    <End Role="SubActivity" Type="Self.SubActivity" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubActivity">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order_tblBrand">
+    <End Role="tblBrand" Type="Self.tblBrand" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblBrand">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order_tblCustomers">
+    <End Role="tblCustomers" Type="Self.tblCustomer" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCustomers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_OrderDetail_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Party__UserId__73852659">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Party" Type="Self.Party" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Party">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__Userid__25DB9BFC">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="Userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OnlineShopEntities18" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="Self.Activity" />
+    <EntitySet Name="Criteria1" EntityType="OnlineShopModel.Criteria" />
+    <EntitySet Name="descriptionTables" EntityType="Self.descriptionTable" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <EntitySet Name="Parties" EntityType="Self.Party" />
+    <EntitySet Name="SubActivities" EntityType="Self.SubActivity" />
+    <EntitySet Name="tblBrands" EntityType="Self.tblBrand" />
+    <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
+    <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK__Order__ActivityI__0697FACD" Association="Self.FK__Order__ActivityI__0697FACD">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__ActivityI__7908F585" Association="Self.FK__Order__ActivityI__7908F585">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubActivi__Activ__3FD07829" Association="Self.FK__SubActivi__Activ__3FD07829">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="SubActivity" EntitySet="SubActivities" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order_Criteria" Association="Self.fk_Order_Criteria">
+      <End Role="Criteria" EntitySet="Criteria1" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__StateID__79FD19BE" Association="Self.FK__Order__StateID__79FD19BE">
+      <End Role="SubActivity" EntitySet="SubActivities" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order_tblBrand" Association="Self.fk_Order_tblBrand">
+      <End Role="tblBrand" EntitySet="tblBrands" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order_tblCustomers" Association="Self.fk_Order_tblCustomers">
+      <End Role="tblCustomers" EntitySet="tblCustomers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_OrderDetail_Order" Association="Self.fk_OrderDetail_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Party__UserId__73852659" Association="Self.FK__Party__UserId__73852659">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Party" EntitySet="Parties" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__Userid__25DB9BFC" Association="Self.FK__UserRole__Userid__25DB9BFC">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <FunctionImport Name="Online_report" ReturnType="Collection(OnlineShopModel.Online_report_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="BeginingDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndingDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="Online_odr" ReturnType="Collection(OnlineShopModel.Online_odr_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="Online_report_Result">
+    <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="BrandDescription" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CriteriaDescription" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="CriteriaID" Nullable="false" />
+    <Property Type="Decimal" Name="Totals" Nullable="true" Precision="34" Scale="6" />
+    <Property Type="DateTime" Name="OrderDate" Nullable="true" />
+    <Property Type="DateTime" Name="DeliveryDate" Nullable="true" />
+    <Property Type="Int32" Name="workOrderNo" Nullable="false" />
+    <Property Type="Int32" Name="OrderId" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Online_odr_Result">
+    <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="200" />
+    <Property Type="Int32" Name="OrderId" Nullable="false" />
+    <Property Type="Int32" Name="workOrderNo" Nullable="false" />
+    <Property Type="Decimal" Name="Amt" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="OrderDate" Nullable="true" />
+    <Property Type="String" Name="Heading" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Unit" Nullable="false" MaxLength="150" />
+    <Property Type="Int32" Name="Expr1" Nullable="false" />
+    <Property Type="String" Name="Address" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Place" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="DeliveryDate" Nullable="true" />
+    <Property Type="String" Name="ProductName" Nullable="false" MaxLength="150" />
+    <Property Type="Int32" Name="BrandID" Nullable="false" />
+    <Property Type="Decimal" Name="Rate" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Qty" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="vat" Nullable="true" />
+    <Property Type="Decimal" Name="SubTotal" Nullable="true" Precision="33" Scale="6" />
+    <Property Type="Decimal" Name="Totals" Nullable="true" Precision="34" Scale="6" />
+    <Property Type="String" Name="advance" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="billsubmission" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Wotype" Nullable="true" />
+    <Property Type="Int32" Name="ActivityId" Nullable="true" />
+    <Property Type="Int32" Name="StateID" Nullable="true" />
+    <Property Type="String" Name="StateName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="100" />
+  </ComplexType>
+</Schema>
